@@ -20,4 +20,22 @@ RSpec.describe CoursesController do
     end
   end
 
+  describe "GET show" do
+    it "assigns @course" do
+      course = create(:course)
+
+      get :show, params: { id: course.id }
+
+      expect(assigns[:course]).to eq(course)
+    end
+
+    it "render template" do
+      course = create(:course)
+
+      get :show, params: { id: course.id }
+
+      expect(response).to render_template("show")
+    end
+  end
+
 end

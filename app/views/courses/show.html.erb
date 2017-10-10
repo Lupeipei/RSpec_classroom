@@ -1,0 +1,9 @@
+<div class="col-md-12">
+  <div class="course">
+    <%= link_to("Edit", edit_course_path(@course), :class => "btn btn-xs pull-right")%>
+
+      <h2><%= @course.title%></h2>
+
+      <p><%= simple_format(@course.description)%></p>
+  </div>
+</div>
