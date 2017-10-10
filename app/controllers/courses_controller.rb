@@ -19,7 +19,10 @@ class CoursesController < ApplicationController
     else
       render :new
     end
-    
+  end
+
+  def edit
+    @course = Course.find(params[:id])
   end
 
   private
