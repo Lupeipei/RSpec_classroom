@@ -1,0 +1,24 @@
+<div class="col-md-12">
+  <div class="course">
+    <%= link_to("New courses", new_course_path, class: "btn pull-right")%>
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td>#</td>
+        <td>Title</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @courses.each do |course| %>
+      <tr>
+        <td>#</td>
+        <td><%= link_to(course.title, course_path(course))%></td>
+        <td><%= simple_format(course.description)%></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
