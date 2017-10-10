@@ -110,4 +110,51 @@ RSpec.describe CoursesController do
     end
   end
 
+  describe "PUT update" do
+    context "when course has title" do
+      it "assign @course" do
+        course = create(:course)
+
+        put :update, params: {id: course.id, course: {title: "Title", description: "Description."}}
+
+        expect(assigns[:course]).to eq(course)
+      end
+
+      it "change value" do
+        course = create(:course)
+
+        put :update, params: {id: course.id, course: {title: "Title", description: "Description."}}
+        expect(assigns[:course].title).to eq("Title")
+        expect(assigns[:course].description).to eq("Description.")
+      end
+
+      it "redirects to courses path" do
+        course = create(:course)
+
+        put :update, params: {id: course.id, course: {title: "Title", description: "Description."}}
+
+        expect(response).to redirect_to courses_path
+      end
+    end
+
+    context "when course doesn't have title" do
+      it "doesn't update a record" do
+        course = create(:course)
+
+        put :update, params: {id: course.id, course: { title: "", description: "Description"}}
+
+        expect(assigns[:course].description).not_to eq("Description")
+      end
+
+      it "render edit template" do
+        course = create(:course)
+
+        put :update, params: {id: course.id, course: {title: "", description: "Description."}}
+
+        expect(response).to render_template("edit")
+      end
+    end
+
+  end
+
 end
