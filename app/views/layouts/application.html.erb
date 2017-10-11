@@ -9,6 +9,12 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container">
+      <%= render "common/navbar"%>
+      <div class="row">
+        <%= yield %>
+      </div>
+    </div>
+
   </body>
 </html>
