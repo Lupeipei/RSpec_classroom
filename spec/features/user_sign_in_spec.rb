@@ -9,19 +9,19 @@ describe "user sign in", :type => :feature do
     new_session_page.sign_in "user@example.com", "password"
     expect(page).to have_content "user@example.com"
   end
-end
 
-private
+  private
 
-def new_session_page
-  home_page.go
-  navbar.sign_in
-end
+  def new_session_page
+    home_page.go
+    navbar.sign_in
+  end
 
-def home_page
-  PageObjects::Pages::Home.new
-end
+  def home_page
+    PageObjects::Pages::Home.new
+  end
 
-def navbar
-  PageObjects::Application::Navbar.new
+  def navbar
+    PageObjects::Application::Navbar.new
+  end
 end
