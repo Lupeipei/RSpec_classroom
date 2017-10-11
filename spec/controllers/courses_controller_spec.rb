@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CoursesController do
+  # index
   describe "GET index" do
     it "assigns @courses and render" do
       course1 = create(:course)
@@ -20,6 +21,7 @@ RSpec.describe CoursesController do
     end
   end
 
+  # show
   describe "GET show" do
     it "assigns @course" do
       course = create(:course)
@@ -38,24 +40,38 @@ RSpec.describe CoursesController do
     end
   end
 
+  # new
   describe "GET new" do
-    it "assign @courses" do
-      course = build(:course)
+    context "when user login" do
+      it "assign @courses" do
+        course = build(:course)
+        user = create(:user)
+        sign_in user
+        get :new
 
-      get :new
+        expect(assigns(:course)).to be_a_new(Course)
+      end
 
-      expect(assigns(:course)).to be_a_new(Course)
+      it "render template" do
+        course = build(:course)
+        user = create(:user)
+        sign_in user
+        get :new
+
+        expect(response).to render_template("new")
+      end
     end
 
-    it "render template" do
-      course = build(:course)
-
-      get :new
-
-      expect(response).to render_template("new")
+    context "when user not login" do
+      it "redirect to new_user_session_path" do
+        get :new
+        expect(response).to redirect_to new_user_session_path
+      end
     end
+
   end
 
+  # create
   describe "POST create" do
     context "when course doesn't have a title" do
       it "doesn't create a new course record" do
@@ -93,6 +109,7 @@ RSpec.describe CoursesController do
 
   end
 
+  # edit
   describe "GET edit" do
     it "assign @course" do
       course = create(:course)
@@ -110,6 +127,7 @@ RSpec.describe CoursesController do
     end
   end
 
+  # update
   describe "PUT update" do
     context "when course has title" do
       it "assign @course" do
@@ -157,6 +175,7 @@ RSpec.describe CoursesController do
 
   end
 
+  # delete
   describe "DELETE destroy" do
     it "assign @course" do
       course = create(:course)
