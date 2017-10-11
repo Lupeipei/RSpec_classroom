@@ -5,4 +5,9 @@ RSpec.describe "Home" do
     visit root_url
     expect(page).to have_css "nav.navbar"
   end
+
+  scenario "welcomes user" do
+    visit root_url
+    expect(page).to have_text "welcome"
+  end
 end
