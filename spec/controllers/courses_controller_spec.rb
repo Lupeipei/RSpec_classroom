@@ -43,20 +43,18 @@ RSpec.describe CoursesController do
   # new
   describe "GET new" do
     context "when user login" do
-      it "assign @courses" do
-        course = build(:course)
-        user = create(:user)
+      let(:user) {create(:user)}
+      let(:course) {build(:course)}
+      before do
         sign_in user
         get :new
+      end
+      it "assign @courses" do
 
         expect(assigns(:course)).to be_a_new(Course)
       end
 
       it "render template" do
-        course = build(:course)
-        user = create(:user)
-        sign_in user
-        get :new
 
         expect(response).to render_template("new")
       end
