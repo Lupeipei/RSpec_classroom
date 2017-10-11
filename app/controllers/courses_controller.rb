@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
 
   def index
     @courses = Course.all
@@ -24,11 +24,11 @@ class CoursesController < ApplicationController
   end
 
   def edit
-    @course = Course.find(params[:id])
+    @course = current_user.courses.find(params[:id])
   end
 
   def update
-    @course = Course.find(params[:id])
+    @course = current_user.courses.find(params[:id])
     if @course.update(course_params)
       redirect_to courses_path
     else
