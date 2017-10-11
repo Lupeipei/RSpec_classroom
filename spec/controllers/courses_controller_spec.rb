@@ -71,6 +71,8 @@ RSpec.describe CoursesController do
 
   # create
   describe "POST create" do
+    let(:user) {create(:user)}
+    before {sign_in user}
     context "when course doesn't have a title" do
       it "doesn't create a new course record" do
 
@@ -88,7 +90,7 @@ RSpec.describe CoursesController do
     end
 
     context "when course has a title" do
-      it "create a new course record when course has a title" do
+      it "create a new course record" do
         course = build(:course)
 
         expect do
@@ -96,12 +98,18 @@ RSpec.describe CoursesController do
         end.to change{ Course.count }.by(1)
       end
 
-      it "redirects to courses_path when course has title" do
+      it "redirects to courses_path" do
         course = build(:course)
 
         post :create, params: {:course => attributes_for(:course)}
 
         expect(response).to redirect_to courses_path
+      end
+
+      it "creates a course for user" do
+        course = build(:course)
+        post :create, params: {course: attributes_for(:course)}
+        expect(Course.last.user).to eq(user)
       end
     end
 
